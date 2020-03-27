@@ -53,6 +53,8 @@
     _sprite2 = [[SKSpriteNode alloc] initWithTexture:_texture];
     _sprite2.position = CGPointMake(_sprite1.position.x + _texture.size.width, 0);
     [self addChild:_sprite2];
+    
+    
 }
 
 -(void) setSize:(CGSize)size

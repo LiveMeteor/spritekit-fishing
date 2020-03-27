@@ -6,68 +6,154 @@
 //  Copyright © 2020 MMears. All rights reserved.
 //
 
-//#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "TimerManager.h"
-@class TimerClock;
+#import "AppDelegate.h"
+#import "GameScene.h"
 
 #pragma mark - TimerManager
-@interface TimerManager ()
+@interface TimerManager () <GameUpdateDelegate>
 
 @end
 
-@implementation TimerManager
+@implementation TimerManager {
+    NSMutableDictionary *_clockMap;
+    CFTimeInterval _lastTime;
+}
 + (instancetype)shareInstance {
-    static TimerManager *timeMan = nil;
+    static TimerManager *timerMng = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        timeMan = [[TimerManager alloc] init];
+        timerMng = [[TimerManager alloc] init];
     });
-    return timeMan;
+    return timerMng;
 }
 
--(TimerClock*) addClock:(NSString*)clockID seconds:(NSInteger)seconds {
-    
+-(instancetype) init {
+    self = [super init];
+    if (self) {
+        _clockMap = [NSMutableDictionary dictionary];
+        _lastTime = 0;
+    }
+    return self;
 }
 
--(TimerClock*) addClock:(NSString*)clockID seconds:(NSInteger)seconds updateDelay:(NSInteger)updateDelay repeatCount:(NSInteger)repeatCount totalSeconds:(NSInteger)totalSeconds speedFactor:(CGFloat)speedFactor {
-    
+-(TimerClock*) addClock:(NSString*)clockID seconds:(NSUInteger)seconds {
+    return [self addClock:clockID seconds:seconds updateDelay:1000 repeatCount:1 totalSeconds:-1 speedFactor:1];
+}
+
+-(TimerClock*) addClock:(NSString*)clockID seconds:(NSUInteger)seconds updateDelay:(NSInteger)updateDelay repeatCount:(NSInteger)repeatCount totalSeconds:(NSInteger)totalSeconds speedFactor:(CGFloat)speedFactor {
+    TimerClock * clock = [_clockMap valueForKey:clockID];
+    if (!clock) {
+        clock  = [[TimerClock alloc] initWithId:clockID updateDelay:updateDelay];
+        [_clockMap setValue:clock forKey:clockID];
+    }
+    [self start];
+    [clock startRemaining:seconds repeatCount:repeatCount totalSeconds:totalSeconds speedFactor:speedFactor];
+    return clock;
 }
 
 -(void) removeClock:(NSString*)clockID {
-    
+    TimerClock * clock = [_clockMap valueForKey:clockID];
+    if (clock) {
+        [clock stop];
+        [_clockMap removeObjectForKey:clockID];
+    }
 }
 
 -(TimerClock*) getClock:(NSString*)clockID {
-    
+    return [self getClock:clockID autoCreate:NO];
 }
 
 -(TimerClock*) getClock:(NSString*)clockID autoCreate:(BOOL)autoCreate {
-    
+    TimerClock * clock = [_clockMap valueForKey:clockID];
+    if (autoCreate && !clock) {
+        clock = [[TimerClock alloc] initWithId:clockID updateDelay:1000];
+        [_clockMap setValue:clock forKey:clockID];
+    }
+    return clock;
 }
 
 -(void) start {
+    if (self.running)
+        return;
     
+    _lastTime = AppDelegate.appDelegate.currentTime;
+    self.running = true;
 }
 
 -(void) stop:(NSString*)clockID {
+    if (!clockID) {
+        if (!self.running)
+            return;
+        self.running = NO;
+    }
+    else {
+        if ([_clockMap valueForKey:clockID]) {
+            [[self getClock:clockID] stop];
+        }
+    }
+}
+
+-(void) pause:(nullable NSString*)clockID {
+    if (!clockID) {
+        if (!self.running)
+            return;
+        self.running = NO;
+    }
+    else {
+        if ([_clockMap valueForKey:clockID]) {
+            [[self getClock:clockID] pause];
+        }
+    }
+}
+
+-(void) resume:(nullable NSString*)clockID {
+    if (!clockID) {
+        if (self.running)
+            return;
+        self.running = YES;
+        _lastTime = AppDelegate.appDelegate.currentTime;
+    }
+    else {
+        if ([_clockMap valueForKey:clockID]) {
+            [[self getClock:clockID] resume];
+        }
+    }
     
 }
 
--(void) pause:(NSString*)clockID {
+#pragma mark GameUpdateDelegate
+-(void) update:(CFTimeInterval)deltaTime {
+    if (!self.running)
+        return;
     
-}
-
--(void) resume:(NSString*)clockID {
+//    CFTimeInterval currentTime = AppDelegate.appDelegate.currentTime;
+//    CFTimeInterval passedTime = currentTime - _lastTime;
+//    _lastTime = currentTime;
     
-}
-
--(void) tick:(CFTimeInterval)frameDelta {
-    
+    for (NSString* key in _clockMap) {
+        TimerClock * clock = [_clockMap valueForKey:key];
+        if (clock.running) {
+            [clock update:deltaTime * 1000 onComplete:^{
+                [self checkActive];
+            }];
+        }
+    }
 }
 
 -(void) checkActive {
+    NSInteger activeCount = 0;
+    for (NSString* key in _clockMap) {
+        activeCount += (((TimerClock*)[_clockMap valueForKey:key]).running ? 1 : 0);
+    }
     
+    if (activeCount == 0) {
+        [self pause:nil];
+    }
+    else {
+        [self resume:nil];
+    }
 }
 
 @end
@@ -75,12 +161,10 @@
 #pragma mark - TimerClock
 @interface TimerClock ()
 
-#pragma mark 是否正在运行
-@property (nonatomic, assign) BOOL running;
 #pragma mark TimerID
 @property (nonatomic, strong) id timerId;
 #pragma mark 单次总时间[毫秒单位]
-@property (nonatomic, assign) NSInteger totalTime;
+@property (nonatomic, assign) CGFloat totalTime;
 #pragma mark 速度系数
 @property (nonatomic, assign) CGFloat speedFactor;
 #pragma mark 重复次数
@@ -88,14 +172,14 @@
 #pragma mark 当前次数
 @property (nonatomic, assign) NSInteger currentCount;
 #pragma mark 单次经历时间[毫秒单位]
-@property (nonatomic, assign) NSInteger passedTime;
+@property (nonatomic, assign) CGFloat passedTime;
 
 @end
 
 @implementation TimerClock {
     NSInteger _updateDelay;
     NSInteger _currentUpdateDelay;
-    NSInteger _passedUpdateTime;
+    CGFloat _passedUpdateTime;
     NSMutableDictionary* _callBackMap;
 }
 
@@ -124,15 +208,15 @@
         if (self.leftTime > 0) {
             _currentUpdateDelay = MIN(_currentUpdateDelay, self.leftTime);
         }
-        for (NSArray *cb in _callBackMap) {
-            [self postProgress:cb];
+        for (NSString* key in _callBackMap) {
+            [self postProgress:(NSArray*)[_callBackMap valueForKey:key]];
         }
         if (_passedTime >= _totalTime) {
             _currentCount++;
             if (_currentCount > _repeatCount) {
                 self.running = NO;
-                for (NSArray *cb in _callBackMap) {
-                    [self postComplete:cb];
+                for (NSString* key in _callBackMap) {
+                    [self postComplete:(NSArray*)[_callBackMap valueForKey:key]];
                 }
                 onComplete();
             }
@@ -143,11 +227,11 @@
     }
 }
 
--(void) startRemaining:(NSInteger)seconds {
+-(void) startRemaining:(NSUInteger)seconds {
     [self startRemaining:seconds repeatCount:1 totalSeconds:-1 speedFactor:1.0];
 }
 
--(void) startRemaining:(NSInteger)seconds repeatCount:(NSInteger)repeatCount totalSeconds:(NSInteger)totalSeconds speedFactor:(CGFloat)speedFactor {
+-(void) startRemaining:(NSUInteger)seconds repeatCount:(NSInteger)repeatCount totalSeconds:(NSInteger)totalSeconds speedFactor:(CGFloat)speedFactor {
     if (self.running)
         [self stop];
     
@@ -162,8 +246,8 @@
         self.running = YES;
     }
     else {
-        for (NSArray *cb in _callBackMap) {
-            [self postComplete:cb];
+        for (NSString* key in _callBackMap) {
+            [self postComplete:(NSArray*)[_callBackMap valueForKey:key]];
         }
     }
 }
@@ -214,11 +298,11 @@
 
 #pragma mark 剩余时间格式化字符[毫秒单位]
 -(NSString *) leftTimeString {
-    return [NSString stringWithFormat:@"%ld", _totalTime - _passedTime];
+    return [NSString stringWithFormat:@"%f", _totalTime - _passedTime];
 }
 
 
--(void) setPassedTime:(NSInteger)passedTime {
+-(void) setPassedTime:(CGFloat)passedTime {
     _passedTime = MIN(passedTime, _totalTime);
 }
 

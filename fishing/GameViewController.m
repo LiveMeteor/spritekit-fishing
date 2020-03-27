@@ -8,22 +8,27 @@
 
 #import "GameViewController.h"
 #import "GameScene.h"
+#import "GameEntrance.h"
 #import "TimerManager.h"
+
 @implementation GameViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Load the SKScene from 'GameScene.sks'
-    GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
-    
+//    GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
     // Set the scale mode to scale to fit the window
-    scene.scaleMode = SKSceneScaleModeAspectFill;
+//    scene.scaleMode = SKSceneScaleModeAspectFill;
+    // Present the scene
+//    [skView presentScene:scene];
+    
+    GameEntrance *entrance = (GameEntrance*)[SKScene nodeWithFileNamed:@"GameEntrance"];
+    entrance.scaleMode = SKSceneScaleModeAspectFill;
+    
     
     SKView *skView = (SKView *)self.view;
-    
-    // Present the scene
-    [skView presentScene:scene];
+    [skView presentScene:entrance];
     
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
@@ -31,8 +36,6 @@
 
 - (void) registCallBack:(id)target onComplete:(void (^)(void))onComplete onProgress:(nullable void (^)(CGFloat progress))onProgress {
     
-   TimerManager *manan = [TimerManager shareInstance];
-//    clock registCallBack
     
 }
 - (void)registerClass {

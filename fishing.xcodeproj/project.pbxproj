@@ -53,6 +53,8 @@
 		0084B4BD2424F166008B7B11 /* fishingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0084B4BC2424F166008B7B11 /* fishingUITests.m */; };
 		009E123E242B325F0013EEAB /* ScrollImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 009E123D242B325F0013EEAB /* ScrollImage.m */; };
 		009E1243242B80C10013EEAB /* DisplayUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 009E1242242B80C10013EEAB /* DisplayUtils.m */; };
+		00C10DED242E200D008C0F94 /* GameEntrance.sks in Resources */ = {isa = PBXBuildFile; fileRef = 00C10DEC242E200D008C0F94 /* GameEntrance.sks */; };
+		00C10DF2242E2869008C0F94 /* GameEntrance.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C10DF1242E2869008C0F94 /* GameEntrance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +134,9 @@
 		009E123F242B7D220013EEAB /* GameMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameMacro.h; sourceTree = "<group>"; };
 		009E1241242B80C10013EEAB /* DisplayUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayUtils.h; sourceTree = "<group>"; };
 		009E1242242B80C10013EEAB /* DisplayUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayUtils.m; sourceTree = "<group>"; };
+		00C10DEC242E200D008C0F94 /* GameEntrance.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameEntrance.sks; sourceTree = "<group>"; };
+		00C10DF0242E2869008C0F94 /* GameEntrance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameEntrance.h; sourceTree = "<group>"; };
+		00C10DF1242E2869008C0F94 /* GameEntrance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameEntrance.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +258,9 @@
 				0084B4A32424F166008B7B11 /* LaunchScreen.storyboard */,
 				0084B4A62424F166008B7B11 /* Info.plist */,
 				0084B4A72424F166008B7B11 /* main.m */,
+				00C10DEC242E200D008C0F94 /* GameEntrance.sks */,
+				00C10DF0242E2869008C0F94 /* GameEntrance.h */,
+				00C10DF1242E2869008C0F94 /* GameEntrance.m */,
 			);
 			path = fishing;
 			sourceTree = "<group>";
@@ -432,6 +440,7 @@
 				000C99D824289BA300383265 /* fishing_rabbit_b.png in Resources */,
 				000C99C324289AC600383265 /* fishing_fish6.png in Resources */,
 				000C99B724289AC600383265 /* fishing_grass7.png in Resources */,
+				00C10DED242E200D008C0F94 /* GameEntrance.sks in Resources */,
 				000C99B424289AC600383265 /* fishing_grass3.png in Resources */,
 				000C99D524289BA300383265 /* fishing_rabbit_h.png in Resources */,
 				000C99DA24289BA300383265 /* fishing_rabbit_boat.png in Resources */,
@@ -471,6 +480,7 @@
 				009E1243242B80C10013EEAB /* DisplayUtils.m in Sources */,
 				0084B49A2424F160008B7B11 /* GameScene.m in Sources */,
 				001EE0DD242C8E3A00CF1B84 /* TimerManager.m in Sources */,
+				00C10DF2242E2869008C0F94 /* GameEntrance.m in Sources */,
 				0084B49D2424F160008B7B11 /* GameViewController.m in Sources */,
 				0084B4A82424F166008B7B11 /* main.m in Sources */,
 				009E123E242B325F0013EEAB /* ScrollImage.m in Sources */,

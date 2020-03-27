@@ -10,6 +10,7 @@
 #import "ScrollImage.h"
 #import "DisplayUtils.h"
 #import "AppDelegate.h"
+#import "TimerManager.h"
 
 @implementation GameScene {
     SKShapeNode* _spinnyNode;
@@ -23,6 +24,10 @@
 
 - (void)didMoveToView:(SKView *)view {
     _lastUpdate = 0;
+    self.timerMng = [TimerManager shareInstance];
+    [_timerMng start];
+    self.updateDelegate = (id)[TimerManager shareInstance];
+    
     // Setup your scene here
     
     // Get label node from scene and store it for use later
@@ -44,12 +49,6 @@
                                                 [SKAction removeFromParent],
                                                 ]]];
     
-//    UIImage *bgImage = [UIImage imageNamed:@"fishing_bg"];
-//    UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 736, 414)];
-//    [bg setImage:bgImage];
-//    bg.contentMode = UIViewContentModeScaleAspectFit;
-//    [self.view addSubview:bg];
-    
     SKTexture* bgTexture = [SKTexture textureWithImageNamed:@"fishing_bg"];
     SKSpriteNode *bgSprite = [[SKSpriteNode alloc] initWithTexture:bgTexture];
     [DisplayUtils keepCenter:bgSprite contentSize:self.size aspectFit:YES];
@@ -65,6 +64,13 @@
     [self addChild:_water];
     
     [_updateArr addObject:_water];
+    
+    TimerClock *clock = [[TimerManager shareInstance] addClock:@"Test1" seconds:20];
+    [clock registCallBack:self onComplete:^{
+        NSLog(@"timer complete");
+    } onProgress:^(CGFloat progress){
+        NSLog(@"progress: %ld", [clock leftTime]);
+    }];
     
     NSLog(@"%@", NSStringFromCGSize([UIScreen mainScreen].bounds.size));
 }
@@ -111,13 +117,11 @@
 -(void)update:(CFTimeInterval)currentTime {
     [super update:currentTime];
     !_lastUpdate && (_lastUpdate = currentTime);
-    
     if ([self.updateDelegate respondsToSelector:@selector(update:)])
         [self.updateDelegate update:currentTime - _lastUpdate];
     
     if (_updateArr) {
-        for (id ele in _updateArr)
-        {
+        for (id ele in _updateArr) {
             [ele update:currentTime - _lastUpdate];
         }
     }
