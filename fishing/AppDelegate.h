@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SpriteKit/SpriteKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-
+@property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, assign) CFTimeInterval currentTime;
+@property (nonatomic, strong) SKView *mainSKView;
 
 +(instancetype) appDelegate;
 

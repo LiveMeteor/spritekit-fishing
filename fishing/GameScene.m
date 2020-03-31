@@ -11,33 +11,31 @@
 #import "DisplayUtils.h"
 #import "AppDelegate.h"
 #import "TimerManager.h"
+#import "GameFishingModel.h"
+#import "GameMacro.h"
 
 @implementation GameScene {
     SKShapeNode* _spinnyNode;
     SKLabelNode* _label;
     
-    NSMutableArray* _updateArr;
+    NSMutableArray<GameUpdateDelegate>* _updateArr;
     CFTimeInterval _lastUpdate;
+    CFTimeInterval _fishLastTimes;
+    NSUInteger _fishCounter;
     
     ScrollImage* _water;
+    SKNode* _fishPool;
 }
 
 - (void)didMoveToView:(SKView *)view {
-    _lastUpdate = 0;
-    self.timerMng = [TimerManager shareInstance];
-    [_timerMng start];
-    self.updateDelegate = (id)[TimerManager shareInstance];
-    
     // Setup your scene here
     
     // Get label node from scene and store it for use later
     _label = (SKLabelNode *)[self childNodeWithName:@"//helloLabel"];
-    
     _label.alpha = 0.0;
     [_label runAction:[SKAction fadeInWithDuration:2.0]];
     
     CGFloat w = (self.size.width + self.size.height) * 0.05;
-    
     // Create shape node to use during mouse interaction
     _spinnyNode = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(w, w) cornerRadius:w * 0.3];
     _spinnyNode.lineWidth = 2.5;
@@ -49,28 +47,35 @@
                                                 [SKAction removeFromParent],
                                                 ]]];
     
+#pragma Game Logic
+    _lastUpdate = 0;
+    _fishCounter = 0;
+    [[TimerManager shareInstance] start];
+    self.updateDelegate = (id)[TimerManager shareInstance];
+    _updateArr = [NSMutableArray<GameUpdateDelegate> array];
+    
     SKTexture* bgTexture = [SKTexture textureWithImageNamed:@"fishing_bg"];
     SKSpriteNode *bgSprite = [[SKSpriteNode alloc] initWithTexture:bgTexture];
     [DisplayUtils keepCenter:bgSprite contentSize:self.size aspectFit:YES];
     bgSprite.userInteractionEnabled = YES;
     [self addChild:bgSprite];
     
-    _updateArr = [NSMutableArray array];
-    
     SKTexture* waterTexture = [SKTexture textureWithImageNamed:@"fishing_foreground"];
     CGSize realWaterSize = [DisplayUtils adaptiveSize:waterTexture.size contentSize:self.size aspectFit:YES];
     _water = [[ScrollImage alloc] initWithImageNamed:@"fishing_foreground" speedPerSec:-30 size:realWaterSize];
     _water.position = CGPointMake(0, (realWaterSize.height - self.size.height) / 2);
     [self addChild:_water];
-    
     [_updateArr addObject:_water];
     
-    TimerClock *clock = [[TimerManager shareInstance] addClock:@"Test1" seconds:20];
-    [clock registCallBack:self onComplete:^{
-        NSLog(@"timer complete");
-    } onProgress:^(CGFloat progress){
-        NSLog(@"progress: %ld", [clock leftTime]);
-    }];
+    _fishPool = [[SKNode alloc] init];
+    [self addChild:_fishPool];
+    
+//    TimerClock *clock = [[TimerManager shareInstance] addClock:@"Test1" seconds:20];
+//    [clock registCallBack:self onComplete:^{
+//        NSLog(@"timer complete");
+//    } onProgress:^(CGFloat progress){
+//        NSLog(@"progress: %ld", [clock leftTime]);
+//    }];
     
     NSLog(@"%@", NSStringFromCGSize([UIScreen mainScreen].bounds.size));
 }
@@ -114,22 +119,34 @@
 }
 
 
--(void)update:(CFTimeInterval)currentTime {
-    [super update:currentTime];
-    !_lastUpdate && (_lastUpdate = currentTime);
+-(void) update:(CFTimeInterval)currTime {
+    [super update:currTime];
+    !_lastUpdate && (_lastUpdate = currTime);
     if ([self.updateDelegate respondsToSelector:@selector(update:)])
-        [self.updateDelegate update:currentTime - _lastUpdate];
+        [self.updateDelegate update:currTime - _lastUpdate];
     
     if (_updateArr) {
-        for (id ele in _updateArr) {
-            [ele update:currentTime - _lastUpdate];
+        for (id<GameUpdateDelegate> ele in _updateArr) {
+            [ele update:currTime - _lastUpdate];
         }
     }
-    _lastUpdate = currentTime;
+    _lastUpdate = currTime;
+    CFTimeInterval currTimeMS = currTime * 1000;
+//    NSLog(@"%f", currTimeMS);
     
     if (AppDelegate.appDelegate) {
-        AppDelegate.appDelegate.currentTime = currentTime;
+        AppDelegate.appDelegate.currentTime = currTime;
+    }
+    
+    if (!_fishLastTimes || currTimeMS - _fishLastTimes > constFishGapTime) {
+        _fishLastTimes = currTimeMS;
+        NSUInteger modelId = 1 + (NSUInteger)(randomNum * 6);
+        
+        GameFishingIns * newFish = [GameFishingIns create:self fishId:modelId * 100 + _fishCounter posY:-SCREEN_HEIGHT / 2 * randomNum];
+        [_fishPool addChild:newFish];
+        _fishCounter++;
     }
 }
+
 
 @end

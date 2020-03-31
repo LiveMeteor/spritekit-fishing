@@ -18,6 +18,5 @@
 @interface GameScene : SKScene
 
 @property (nonatomic, weak) id<GameUpdateDelegate> updateDelegate;
-@property (nonatomic, strong) TimerManager* timerMng;
 
 @end

@@ -42,6 +42,10 @@
     return [self addClock:clockID seconds:seconds updateDelay:1000 repeatCount:1 totalSeconds:-1 speedFactor:1];
 }
 
+-(TimerClock*) addClock:(NSString*)clockID seconds:(NSUInteger)seconds updateDelay:(NSUInteger)updateDelay {
+    return [self addClock:clockID seconds:seconds updateDelay:updateDelay repeatCount:1 totalSeconds:-1 speedFactor:1];
+}
+
 -(TimerClock*) addClock:(NSString*)clockID seconds:(NSUInteger)seconds updateDelay:(NSInteger)updateDelay repeatCount:(NSInteger)repeatCount totalSeconds:(NSInteger)totalSeconds speedFactor:(CGFloat)speedFactor {
     TimerClock * clock = [_clockMap valueForKey:clockID];
     if (!clock) {

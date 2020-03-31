@@ -29,7 +29,6 @@
  @param tarSize 目标尺寸
  @param contentSize 容器尺寸
  @param aspectFit 适配规则 YES 留空 NO 裁剪
- 
  */
 +(CGSize) adaptiveSize:(CGSize)tarSize contentSize:(CGSize)contentSize aspectFit:(BOOL)aspectFit {
     CGFloat widthRatio = contentSize.width / tarSize.width;

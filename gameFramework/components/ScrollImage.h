@@ -7,10 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "GameScene.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ScrollImage : SKNode
+@interface ScrollImage : SKNode <GameUpdateDelegate>
 
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGFloat speedPerSec;

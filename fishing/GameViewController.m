@@ -10,42 +10,22 @@
 #import "GameScene.h"
 #import "GameEntrance.h"
 #import "TimerManager.h"
+#import "AppDelegate.h"
 
 @implementation GameViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [AppDelegate appDelegate].mainSKView = (SKView *)self.view;
 
-    // Load the SKScene from 'GameScene.sks'
-//    GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
-    // Set the scale mode to scale to fit the window
-//    scene.scaleMode = SKSceneScaleModeAspectFill;
-    // Present the scene
-//    [skView presentScene:scene];
-    
     GameEntrance *entrance = (GameEntrance*)[SKScene nodeWithFileNamed:@"GameEntrance"];
-    entrance.scaleMode = SKSceneScaleModeAspectFill;
+    entrance.scaleMode = SKSceneScaleModeResizeFill;
+    [[AppDelegate appDelegate].mainSKView presentScene:entrance];
     
-    
-    SKView *skView = (SKView *)self.view;
-    [skView presentScene:entrance];
-    
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+    ((SKView *)self.view).showsFPS = YES;
+    ((SKView *)self.view).showsNodeCount = YES;
 }
 
-- (void) registCallBack:(id)target onComplete:(void (^)(void))onComplete onProgress:(nullable void (^)(CGFloat progress))onProgress {
-    
-    
-}
-- (void)registerClass {
-    [self registCallBack:self onComplete:^{
-        
-    } onProgress:^(CGFloat progress) {
-        
-    }];
-    
-}
 - (BOOL)shouldAutorotate {
     return YES;
 }

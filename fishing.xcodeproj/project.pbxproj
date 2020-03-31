@@ -40,6 +40,10 @@
 		000C99DA24289BA300383265 /* fishing_rabbit_boat.png in Resources */ = {isa = PBXBuildFile; fileRef = 000C99D324289BA300383265 /* fishing_rabbit_boat.png */; };
 		000C99DB24289BA300383265 /* fishing_rabbit_f.png in Resources */ = {isa = PBXBuildFile; fileRef = 000C99D424289BA300383265 /* fishing_rabbit_f.png */; };
 		001EE0DD242C8E3A00CF1B84 /* TimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 001EE0DC242C8E3A00CF1B84 /* TimerManager.m */; };
+		00619C48243365A0001F5CF2 /* MathsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00619C47243365A0001F5CF2 /* MathsUtils.m */; };
+		0071358F2431A46C00B213E3 /* GSimpleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0071358E2431A46C00B213E3 /* GSimpleButton.m */; };
+		0071359224321D1B00B213E3 /* GameFishingIns.m in Sources */ = {isa = PBXBuildFile; fileRef = 0071359124321D1B00B213E3 /* GameFishingIns.m */; };
+		0071359524321D9F00B213E3 /* GameFishingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0071359424321D9F00B213E3 /* GameFishingModel.m */; };
 		0084B4932424F160008B7B11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0084B4922424F160008B7B11 /* AppDelegate.m */; };
 		0084B4952424F160008B7B11 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0084B4942424F160008B7B11 /* GameScene.sks */; };
 		0084B4972424F160008B7B11 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0084B4962424F160008B7B11 /* Actions.sks */; };
@@ -109,6 +113,14 @@
 		000C99D424289BA300383265 /* fishing_rabbit_f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fishing_rabbit_f.png; sourceTree = "<group>"; };
 		001EE0DB242C8E3A00CF1B84 /* TimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimerManager.h; sourceTree = "<group>"; };
 		001EE0DC242C8E3A00CF1B84 /* TimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimerManager.m; sourceTree = "<group>"; };
+		00619C46243365A0001F5CF2 /* MathsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathsUtils.h; sourceTree = "<group>"; };
+		00619C47243365A0001F5CF2 /* MathsUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathsUtils.m; sourceTree = "<group>"; };
+		0071358D2431A46C00B213E3 /* GSimpleButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSimpleButton.h; sourceTree = "<group>"; };
+		0071358E2431A46C00B213E3 /* GSimpleButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSimpleButton.m; sourceTree = "<group>"; };
+		0071359024321D1B00B213E3 /* GameFishingIns.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameFishingIns.h; sourceTree = "<group>"; };
+		0071359124321D1B00B213E3 /* GameFishingIns.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFishingIns.m; sourceTree = "<group>"; };
+		0071359324321D9F00B213E3 /* GameFishingModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameFishingModel.h; sourceTree = "<group>"; };
+		0071359424321D9F00B213E3 /* GameFishingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFishingModel.m; sourceTree = "<group>"; };
 		0084B48E2424F160008B7B11 /* fishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fishing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0084B4912424F160008B7B11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0084B4922424F160008B7B11 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -243,24 +255,28 @@
 		0084B4902424F160008B7B11 /* fishing */ = {
 			isa = PBXGroup;
 			children = (
+				0084B4962424F160008B7B11 /* Actions.sks */,
 				0084B4912424F160008B7B11 /* AppDelegate.h */,
 				0084B4922424F160008B7B11 /* AppDelegate.m */,
-				0084B4942424F160008B7B11 /* GameScene.sks */,
-				0084B4962424F160008B7B11 /* Actions.sks */,
-				0084B4982424F160008B7B11 /* GameScene.h */,
-				0084B4992424F160008B7B11 /* GameScene.m */,
-				0084B49B2424F160008B7B11 /* GameViewController.h */,
-				0084B49C2424F160008B7B11 /* GameViewController.m */,
-				0084B49E2424F160008B7B11 /* Main.storyboard */,
 				0084B4A12424F166008B7B11 /* Assets.xcassets */,
-				000C99CD24289BA300383265 /* rabbit */,
 				000C999A24289AC600383265 /* atlas */,
-				0084B4A32424F166008B7B11 /* LaunchScreen.storyboard */,
-				0084B4A62424F166008B7B11 /* Info.plist */,
-				0084B4A72424F166008B7B11 /* main.m */,
-				00C10DEC242E200D008C0F94 /* GameEntrance.sks */,
 				00C10DF0242E2869008C0F94 /* GameEntrance.h */,
 				00C10DF1242E2869008C0F94 /* GameEntrance.m */,
+				00C10DEC242E200D008C0F94 /* GameEntrance.sks */,
+				0071359024321D1B00B213E3 /* GameFishingIns.h */,
+				0071359124321D1B00B213E3 /* GameFishingIns.m */,
+				0071359324321D9F00B213E3 /* GameFishingModel.h */,
+				0071359424321D9F00B213E3 /* GameFishingModel.m */,
+				0084B4982424F160008B7B11 /* GameScene.h */,
+				0084B4992424F160008B7B11 /* GameScene.m */,
+				0084B4942424F160008B7B11 /* GameScene.sks */,
+				0084B49B2424F160008B7B11 /* GameViewController.h */,
+				0084B49C2424F160008B7B11 /* GameViewController.m */,
+				0084B4A62424F166008B7B11 /* Info.plist */,
+				0084B4A32424F166008B7B11 /* LaunchScreen.storyboard */,
+				0084B4A72424F166008B7B11 /* main.m */,
+				0084B49E2424F160008B7B11 /* Main.storyboard */,
+				000C99CD24289BA300383265 /* rabbit */,
 			);
 			path = fishing;
 			sourceTree = "<group>";
@@ -299,6 +315,8 @@
 			children = (
 				009E123C242B325F0013EEAB /* ScrollImage.h */,
 				009E123D242B325F0013EEAB /* ScrollImage.m */,
+				0071358D2431A46C00B213E3 /* GSimpleButton.h */,
+				0071358E2431A46C00B213E3 /* GSimpleButton.m */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -308,6 +326,8 @@
 			children = (
 				009E1241242B80C10013EEAB /* DisplayUtils.h */,
 				009E1242242B80C10013EEAB /* DisplayUtils.m */,
+				00619C46243365A0001F5CF2 /* MathsUtils.h */,
+				00619C47243365A0001F5CF2 /* MathsUtils.m */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -480,10 +500,14 @@
 				009E1243242B80C10013EEAB /* DisplayUtils.m in Sources */,
 				0084B49A2424F160008B7B11 /* GameScene.m in Sources */,
 				001EE0DD242C8E3A00CF1B84 /* TimerManager.m in Sources */,
+				0071359224321D1B00B213E3 /* GameFishingIns.m in Sources */,
 				00C10DF2242E2869008C0F94 /* GameEntrance.m in Sources */,
 				0084B49D2424F160008B7B11 /* GameViewController.m in Sources */,
+				0071358F2431A46C00B213E3 /* GSimpleButton.m in Sources */,
 				0084B4A82424F166008B7B11 /* main.m in Sources */,
 				009E123E242B325F0013EEAB /* ScrollImage.m in Sources */,
+				00619C48243365A0001F5CF2 /* MathsUtils.m in Sources */,
+				0071359524321D9F00B213E3 /* GameFishingModel.m in Sources */,
 				0084B4932424F160008B7B11 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

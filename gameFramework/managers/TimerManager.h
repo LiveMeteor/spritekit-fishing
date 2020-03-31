@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @return TimerClock*
 */
 -(TimerClock*) addClock:(NSString*)clockID seconds:(NSUInteger)seconds;
+-(TimerClock*) addClock:(NSString*)clockID seconds:(NSUInteger)seconds updateDelay:(NSUInteger)updateDelay;
 
 /** 添加时钟
  @param clockID 时钟ID
