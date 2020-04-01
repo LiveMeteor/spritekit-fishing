@@ -19,6 +19,7 @@
 @implementation TimerManager {
     NSMutableDictionary *_clockMap;
     CFTimeInterval _lastTime;
+    NSMutableArray *_preRemoveKeys;
 }
 + (instancetype)shareInstance {
     static TimerManager *timerMng = nil;
@@ -61,7 +62,8 @@
     TimerClock * clock = [_clockMap valueForKey:clockID];
     if (clock) {
         [clock stop];
-        [_clockMap removeObjectForKey:clockID];
+        !_preRemoveKeys && (_preRemoveKeys = [NSMutableArray array]);
+        [_preRemoveKeys addObject:clockID];
     }
 }
 
@@ -143,6 +145,11 @@
                 [self checkActive];
             }];
         }
+    }
+    
+    if (_preRemoveKeys && _preRemoveKeys.count > 0) {
+        [_clockMap removeObjectsForKeys:_preRemoveKeys];
+        _preRemoveKeys = nil;
     }
 }
 

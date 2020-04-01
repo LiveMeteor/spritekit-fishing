@@ -34,8 +34,8 @@ typedef enum: NSInteger {
 
 + (instancetype)create:(SKNode*)parent fishId:(NSUInteger)fishId posY:(NSInteger)posY {
     GameFishingIns * fish = [[GameFishingModel shareInstance] getFishFromPool];
-    [fish activate:fishId leftTime:(NSInteger)(SCREEN_WITDH + randomNum * 1000) posY:posY];
-    NSLog(@"create fish fishId=%lu posY=%ld", fishId, posY);
+    [fish activate:fishId leftTime:(NSInteger)(10667 + randomNum * 1000) posY:posY];
+//    NSLog(@"create fish fishId=%lu posY=%ld", fishId, posY);
     return fish;
 }
 
@@ -56,22 +56,20 @@ typedef enum: NSInteger {
     NSUInteger fishModelId = floorf((float)fishId / 100);
     SKTexture *fishTexture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"fishing_fish%lu.png", fishModelId]];
     _fishImg.texture = fishTexture;
-    _fishImg.size = CGSizeMake(fishTexture.size.width, fishTexture.size.height);
-    _fishImg.xScale = _fishImg.yScale = 0.5;
-//    NSLog(@"%@", NSStringFromCGRect(self.frame));
+    _fishImg.size = CGSizeMake(fishTexture.size.width / 2, fishTexture.size.height / 2);
+//    NSLog(@"%@", NSStringFromCGRect(_fishImg.frame));
     
     _leftTime = leftTime;
-    _swingCycle = SCREEN_WITDH * (0.8 + randomNum + 0.5);
+    _swingCycle = SCENE_WIDTH * (1.3 + randomNum);
     _posY = posY;
-    _fishImg.position = CGPointMake(200, _posY);
     
-//    _clock = [[TimerManager shareInstance] addClock:[NSString stringWithFormat:@"fish%lu", _fishId] seconds:(CGFloat)_leftTime / 1000  updateDelay: 10];
-//    __weak typeof(self) weakself = self;
-//    [_clock registCallBack:self onComplete:^{
-//        [weakself willDie];
-//    } onProgress:^(CGFloat progress) {
-//        [weakself update:progress];
-//    }];
+    _clock = [[TimerManager shareInstance] addClock:[NSString stringWithFormat:@"fish%lu", _fishId] seconds:(CGFloat)_leftTime / 1000  updateDelay: 10];
+    __weak typeof(self) weakself = self;
+    [_clock registCallBack:self onComplete:^{
+        [weakself willDie];
+    } onProgress:^(CGFloat progress) {
+        [weakself update:progress];
+    }];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -88,9 +86,10 @@ typedef enum: NSInteger {
     if (_status != Normal)
         return;
     
-    CGFloat x = (SCREEN_WITDH + 100) * (1 - progress) - 100;
-    CGFloat y = _posY + sinf(SCREEN_WITDH * 2 * progress * (2 * 3.1415927 / _swingCycle)) * 60;
+    CGFloat x = SCENE_WIDTH * (1 - progress) - SCENE_WIDTH / 2;
+    CGFloat y = _posY + sinf(SCENE_WIDTH * 2 * progress * (2 * PI / _swingCycle)) * 20;
     self.position = CGPointMake(x, y);
+//    NSLog(@"progress: %lu %f %@", _fishId, progress, NSStringFromCGPoint(self.position));
 }
 
 - (void) willDie {
@@ -109,7 +108,7 @@ typedef enum: NSInteger {
     }
     _fishImg.texture = nil;
     _wordImg.texture = nil;
-    
+    self.position = CGPointZero;
     [self removeFromParent];
     [[GameFishingModel shareInstance] putFishToPool:self];
 }

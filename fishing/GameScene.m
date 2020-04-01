@@ -70,14 +70,7 @@
     _fishPool = [[SKNode alloc] init];
     [self addChild:_fishPool];
     
-//    TimerClock *clock = [[TimerManager shareInstance] addClock:@"Test1" seconds:20];
-//    [clock registCallBack:self onComplete:^{
-//        NSLog(@"timer complete");
-//    } onProgress:^(CGFloat progress){
-//        NSLog(@"progress: %ld", [clock leftTime]);
-//    }];
-    
-    NSLog(@"%@", NSStringFromCGSize([UIScreen mainScreen].bounds.size));
+    NSLog(@"%@ %@", NSStringFromCGSize([UIScreen mainScreen].bounds.size), NSStringFromCGSize([AppDelegate appDelegate].mainSKView.scene.size));
 }
 
 
@@ -142,7 +135,7 @@
         _fishLastTimes = currTimeMS;
         NSUInteger modelId = 1 + (NSUInteger)(randomNum * 6);
         
-        GameFishingIns * newFish = [GameFishingIns create:self fishId:modelId * 100 + _fishCounter posY:-SCREEN_HEIGHT / 2 * randomNum];
+        GameFishingIns * newFish = [GameFishingIns create:self fishId:modelId * 100 + _fishCounter posY:-SCENE_HEIGHT / 2 * randomNum];
         [_fishPool addChild:newFish];
         _fishCounter++;
     }
