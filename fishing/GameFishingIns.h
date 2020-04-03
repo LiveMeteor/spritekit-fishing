@@ -14,7 +14,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) struct IWordData data;
 
+/**
+ 正成新鱼
+ */
 +(instancetype) create:(SKNode*)parent fishId:(NSUInteger)fishId posY:(NSInteger)posY;
+
+/**
+ 点击正确结束
+ */
+-(void) playCorrectComplete;
+/**
+ 点击错误结束
+ */
+-(void) playWrongComplete;
 
 @end
 

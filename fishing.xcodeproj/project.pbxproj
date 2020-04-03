@@ -272,6 +272,8 @@
 				00C10DF0242E2869008C0F94 /* GameEntrance.h */,
 				00C10DF1242E2869008C0F94 /* GameEntrance.m */,
 				00C10DEC242E200D008C0F94 /* GameEntrance.sks */,
+				00B7247F2435C21D0062C683 /* GameFishingHook.h */,
+				00B724802435C21D0062C683 /* GameFishingHook.m */,
 				0071359024321D1B00B213E3 /* GameFishingIns.h */,
 				0071359124321D1B00B213E3 /* GameFishingIns.m */,
 				0071359324321D9F00B213E3 /* GameFishingModel.h */,
@@ -288,8 +290,6 @@
 				0084B4A72424F166008B7B11 /* main.m */,
 				0084B49E2424F160008B7B11 /* Main.storyboard */,
 				000C99CD24289BA300383265 /* rabbit */,
-				00B7247F2435C21D0062C683 /* GameFishingHook.h */,
-				00B724802435C21D0062C683 /* GameFishingHook.m */,
 			);
 			path = fishing;
 			sourceTree = "<group>";

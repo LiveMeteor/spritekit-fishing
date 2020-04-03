@@ -80,9 +80,9 @@
     [self addChild:_rabbit];
     
     _hook = [[GameFishingHook alloc] init];
-    _hook.zRotation = -PI / 2;
+    [_hook resetHook];
     _hook.position = CGPointMake(16, 148);
-    _hook.hookLength = 80;
+    
     [_updateArr addObject:_hook];
     [self addChild:_hook];
     
@@ -93,12 +93,27 @@
 }
 
 -(void) onCatchHandler:(NSNotification*)notify {
-    NSLog(@"notify");
+//    NSLog(@"notify");
 //    notify.object;
 }
 
 -(void) onMissHandler:(NSNotification*)notify {
+    GameFishingIns *fishingIns = notify.object[0];
+    CGPoint pos = ((NSValue*)notify.object[1]).CGPointValue;
+    CGFloat angel = atanf((pos.y - _hook.position.y) / (pos.x - _hook.position.x));
+    CGFloat rotation = angel > 0 ? angel - PI : angel;
+    _hook.zRotation = rotation;
+    NSLog(@"hook angel: %f", RAD2DEG(rotation));
     
+    CGFloat maxLength = sqrtf(powf(pos.y - _hook.position.y, 2) + powf(pos.x - _hook.position.x, 2));
+    _hook.hangingFish = fishingIns;
+    
+    __weak typeof(GameFishingHook) *weakhook = _hook;
+    [_hook actionMissFish:maxLength - 30 onComplete:^{
+        weakhook.hangingFish = nil;
+        [fishingIns playWrongComplete];
+        [weakhook resetHook];
+    }];
 }
 
 

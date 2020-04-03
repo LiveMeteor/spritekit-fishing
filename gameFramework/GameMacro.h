@@ -22,6 +22,11 @@
 #define SCENE_HEIGHT [AppDelegate appDelegate].mainSKView.scene.size.height
 //MARK: π
 #define PI 3.1415927
+//MARK: 角度转弧度
+#define DEG2RAD(value) value / (180 / PI)
+//MARK: 弧度转角度
+#define RAD2DEG(value) 180 / PI * value
+
 //MARK: 0-1之间的浮点随机数
 #define randomNum [MathsUtils randomNum]
 //MARK: 3位16进度数字颜色转 UIColor

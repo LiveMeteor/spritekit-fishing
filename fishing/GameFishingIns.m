@@ -73,8 +73,43 @@ typedef enum: NSInteger {
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSString *notifyName = _data.trueOpt ? @"bomb" : @"miss";
+    NSString *notifyName;
+    if (_data.trueOpt) {
+        [self playCorrect];
+        notifyName = @"bomb";
+    }
+    else {
+        [self playWrong];
+        notifyName = @"miss";
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:notifyName object:@[self, [NSValue valueWithCGPoint:self.position]]];
+}
+
+/**
+ 点击正确
+ */
+-(void) playCorrect {
+    if (_status != Normal)
+        return;
+    _status = Correct;
+}
+
+-(void) playCorrectComplete {
+    _status = Normal;
+    [self willDie];
+}
+
+/**
+ 点击错误
+ */
+-(void) playWrong {
+    if (_status != Normal)
+        return;
+    _status = Wrong;
+}
+
+-(void) playWrongComplete {
+    _status = Normal;
 }
 
 - (void) setData:(struct IWordData)data {

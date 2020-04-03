@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "GameScene.h"
+#import "GameFishingIns.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +16,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSUInteger hookLength;
 @property (nonatomic, assign) NSUInteger actionHookLength;
+@property (nonatomic, weak, nullable) GameFishingIns* hangingFish;
 
--(void)update:(CFTimeInterval)deltaTime;
+/**
+ 鱼勾复位
+ */
+-(void) resetHook;
+/**
+ 抓错鱼的勾子动画
+ */
+-(void) actionMissFish:(CGFloat)startLength onComplete:(void (^)(void))onComplete;
+/**
+ 抓对鱼的勾子动画
+ */
+-(void) actionCatchFish:(CGFloat)startLength onComplete:(void (^)(void))onComplete;
+
+#pragma - GameUpdateDelegate
+-(void) update:(CFTimeInterval)deltaTime;
 
 @end
 
