@@ -22,10 +22,22 @@ static NSUInteger imgHookLength = 32;
     
     BOOL _actionLengthRunning;
     
-    BOOL _actionMissFishRunning;
     CGFloat _actionMissFishStartLength;
     CFTimeInterval _actionMissFishStart;
+    BOOL _actionMissFishRunning;
     void(^_actionMissFishCallback)(void);
+    
+    CGFloat _actionThrewHookStartLength;
+    CGFloat _actionThrewHookEndLength;
+    CFTimeInterval _actionThrewHookStart;
+    BOOL _actionThrewHookRunning;
+    void(^_actionThrewHookCallback)(void);
+    
+    CGFloat _actionCatchFishStartLength;
+    CGFloat _actionCatchFishEndLength;
+    CFTimeInterval _actionCatchFishStart;
+    BOOL _actionCatchFishRunning;
+    void(^_actionCatchFishCallback)(void);
 }
 
 -(instancetype) init {
@@ -74,16 +86,27 @@ static NSUInteger imgHookLength = 32;
     _actionLengthRunning = YES;
 }
 
--(void) actionMissFish:(CGFloat)startLength onComplete:(void (^)(void))onComplete {
+-(void) actionMissFishStartLength:(CGFloat)startLength onComplete:(void (^)(void))onComplete {
     _actionMissFishStartLength = startLength;
     _actionMissFishStart = [AppDelegate appDelegate].currentTime;
     _actionMissFishRunning = YES;
     _actionMissFishCallback = onComplete;
 }
 
--(void) actionCatchFish:(CGFloat)startLength onComplete:(void (^)(void))onComplete {
-    
-    onComplete();
+-(void) actionThrewHook:(NSUInteger)endLength onComplete:(void (^)(void))onComplete {
+    _actionThrewHookStartLength = _hookLength;
+    _actionThrewHookEndLength = endLength;
+    _actionThrewHookStart = [AppDelegate appDelegate].currentTime;
+    _actionThrewHookRunning = YES;
+    _actionThrewHookCallback = onComplete;
+}
+
+-(void) actionCatchFishOnComplete:(void (^)(void))onComplete {
+    _actionCatchFishStartLength = _hookLength;
+    _actionCatchFishEndLength = imgHookLength;
+    _actionCatchFishStart = [AppDelegate appDelegate].currentTime;
+    _actionCatchFishRunning = YES;
+    _actionCatchFishCallback = onComplete;
 }
 
 #pragma - GameUpdateDelegate
@@ -118,11 +141,46 @@ static NSUInteger imgHookLength = 32;
             [self updateHookLength:_actionMissFishStartLength + 30 * passTime * 10];
         }
         else {
+            _actionMissFishStartLength = 0;
             _actionMissFishStart = 0;
             _actionMissFishRunning = NO;
             if (_actionMissFishCallback) {
                 _actionMissFishCallback();
                 _actionMissFishCallback = nil;
+            }
+        }
+    }
+#pragma mark 抛杆的动画
+    if (_actionThrewHookRunning) {
+        CFTimeInterval passTime = [AppDelegate appDelegate].currentTime - _actionThrewHookStart;
+        if (passTime < 0.2) {
+            [self updateHookLength:_actionThrewHookStartLength + (_actionThrewHookEndLength - _actionThrewHookStartLength) * passTime * 5];
+        }
+        else {
+            _actionThrewHookStartLength = 0;
+            _actionThrewHookEndLength = 0;
+            _actionThrewHookStart = 0;
+            _actionThrewHookRunning = NO;
+            if (_actionThrewHookCallback) {
+                _actionThrewHookCallback();
+                _actionThrewHookCallback = nil;
+            }
+        }
+    }
+#pragma mark 抓到鱼的动画
+    if (_actionCatchFishRunning) {
+        CFTimeInterval passTime = [AppDelegate appDelegate].currentTime - _actionCatchFishStart;
+        if (passTime < 1) {
+            [self updateHookLength:_actionCatchFishStartLength + (_actionCatchFishEndLength - _actionCatchFishStartLength) * passTime];
+        }
+        else {
+            _actionCatchFishStartLength = 0;
+            _actionCatchFishEndLength = 0;
+            _actionCatchFishStart = 0;
+            _actionCatchFishRunning = NO;
+            if (_actionCatchFishCallback) {
+                _actionCatchFishCallback();
+                _actionCatchFishCallback = nil;
             }
         }
     }

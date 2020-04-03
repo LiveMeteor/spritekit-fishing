@@ -87,14 +87,30 @@
     [self addChild:_hook];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCatchHandler:) name:@"bomb" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMissHandler:) name:@"bomb" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMissHandler:) name:@"miss" object:nil];
     
     NSLog(@"%@ %@", NSStringFromCGSize([UIScreen mainScreen].bounds.size), NSStringFromCGSize([AppDelegate appDelegate].mainSKView.scene.size));
 }
 
 -(void) onCatchHandler:(NSNotification*)notify {
-//    NSLog(@"notify");
-//    notify.object;
+    GameFishingIns *fishingIns = notify.object[0];
+    CGPoint pos = ((NSValue*)notify.object[1]).CGPointValue;
+    CGFloat angel = atanf((pos.y - _hook.position.y) / (pos.x - _hook.position.x));
+    CGFloat rotation = angel > 0 ? angel - PI : angel;
+    _hook.zRotation = rotation;
+    
+    CGFloat maxLength = sqrtf(powf(pos.y - _hook.position.y, 2) + powf(pos.x - _hook.position.x, 2));
+    _hook.hookLength = maxLength / 2;
+    
+    __weak typeof(GameFishingHook) *weakhook = _hook;
+    [_hook actionThrewHook:maxLength onComplete:^{
+        weakhook.hangingFish = fishingIns;
+        [weakhook actionCatchFishOnComplete:^{
+            weakhook.hangingFish = nil;
+            [fishingIns playCorrectComplete];
+            [weakhook resetHook];
+        }];
+    }];
 }
 
 -(void) onMissHandler:(NSNotification*)notify {
@@ -109,7 +125,7 @@
     _hook.hangingFish = fishingIns;
     
     __weak typeof(GameFishingHook) *weakhook = _hook;
-    [_hook actionMissFish:maxLength - 30 onComplete:^{
+    [_hook actionMissFishStartLength:maxLength - 30 onComplete:^{
         weakhook.hangingFish = nil;
         [fishingIns playWrongComplete];
         [weakhook resetHook];
@@ -151,7 +167,7 @@
     for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
     
 //    _hook.hookLength += 10;
-    _hook.actionHookLength += 10;
+//    _hook.actionHookLength += 10;
     
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {

@@ -25,11 +25,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  抓错鱼的勾子动画
  */
--(void) actionMissFish:(CGFloat)startLength onComplete:(void (^)(void))onComplete;
+-(void) actionMissFishStartLength:(CGFloat)startLength onComplete:(void (^)(void))onComplete;
+
+/**
+ 抛勾子动画
+ */
+-(void) actionThrewHook:(NSUInteger)endLength onComplete:(void (^)(void))onComplete;
 /**
  抓对鱼的勾子动画
  */
--(void) actionCatchFish:(CGFloat)startLength onComplete:(void (^)(void))onComplete;
+-(void) actionCatchFishOnComplete:(void (^)(void))onComplete;
 
 #pragma - GameUpdateDelegate
 -(void) update:(CFTimeInterval)deltaTime;
