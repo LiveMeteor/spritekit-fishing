@@ -13,6 +13,8 @@
 #import "TimerManager.h"
 #import "GameFishingModel.h"
 #import "GameMacro.h"
+#import "GameRabbit.h"
+#import "GameFishingHook.h"
 
 @implementation GameScene {
     SKShapeNode* _spinnyNode;
@@ -25,6 +27,8 @@
     
     ScrollImage* _water;
     SKNode* _fishPool;
+    GameRabbit* _rabbit;
+    GameFishingHook* _hook;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -70,7 +74,31 @@
     _fishPool = [[SKNode alloc] init];
     [self addChild:_fishPool];
     
+    _rabbit = [[GameRabbit alloc] initWithImageNamed:@"fishing_rabbit_img"];
+    _rabbit.size = CGSizeMake(248, 124);
+    _rabbit.position = CGPointMake(0, 120);
+    [self addChild:_rabbit];
+    
+    _hook = [[GameFishingHook alloc] init];
+    _hook.zRotation = -PI / 2;
+    _hook.position = CGPointMake(16, 148);
+    _hook.hookLength = 80;
+    [_updateArr addObject:_hook];
+    [self addChild:_hook];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCatchHandler:) name:@"bomb" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMissHandler:) name:@"bomb" object:nil];
+    
     NSLog(@"%@ %@", NSStringFromCGSize([UIScreen mainScreen].bounds.size), NSStringFromCGSize([AppDelegate appDelegate].mainSKView.scene.size));
+}
+
+-(void) onCatchHandler:(NSNotification*)notify {
+    NSLog(@"notify");
+//    notify.object;
+}
+
+-(void) onMissHandler:(NSNotification*)notify {
+    
 }
 
 
@@ -106,6 +134,10 @@
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
+    
+//    _hook.hookLength += 10;
+    _hook.actionHookLength += 10;
+    
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
@@ -136,6 +168,9 @@
         NSUInteger modelId = 1 + (NSUInteger)(randomNum * 6);
         
         GameFishingIns * newFish = [GameFishingIns create:self fishId:modelId * 100 + _fishCounter posY:-SCENE_HEIGHT / 2 * randomNum];
+        
+        struct IWordData wordData = {@"", @"", _fishCounter % 2 == 0};
+        newFish.data = wordData;
         [_fishPool addChild:newFish];
         _fishCounter++;
     }

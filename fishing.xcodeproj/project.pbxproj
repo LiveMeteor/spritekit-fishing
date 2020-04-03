@@ -57,6 +57,9 @@
 		0084B4BD2424F166008B7B11 /* fishingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0084B4BC2424F166008B7B11 /* fishingUITests.m */; };
 		009E123E242B325F0013EEAB /* ScrollImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 009E123D242B325F0013EEAB /* ScrollImage.m */; };
 		009E1243242B80C10013EEAB /* DisplayUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 009E1242242B80C10013EEAB /* DisplayUtils.m */; };
+		00B7247B2435984E0062C683 /* fishing_rabbit_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 00B7247A2435984E0062C683 /* fishing_rabbit_img.png */; };
+		00B7247E243599580062C683 /* GameRabbit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B7247D243599580062C683 /* GameRabbit.m */; };
+		00B724812435C21D0062C683 /* GameFishingHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B724802435C21D0062C683 /* GameFishingHook.m */; };
 		00C10DED242E200D008C0F94 /* GameEntrance.sks in Resources */ = {isa = PBXBuildFile; fileRef = 00C10DEC242E200D008C0F94 /* GameEntrance.sks */; };
 		00C10DF2242E2869008C0F94 /* GameEntrance.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C10DF1242E2869008C0F94 /* GameEntrance.m */; };
 /* End PBXBuildFile section */
@@ -146,6 +149,11 @@
 		009E123F242B7D220013EEAB /* GameMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameMacro.h; sourceTree = "<group>"; };
 		009E1241242B80C10013EEAB /* DisplayUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayUtils.h; sourceTree = "<group>"; };
 		009E1242242B80C10013EEAB /* DisplayUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayUtils.m; sourceTree = "<group>"; };
+		00B7247A2435984E0062C683 /* fishing_rabbit_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fishing_rabbit_img.png; sourceTree = "<group>"; };
+		00B7247C243599580062C683 /* GameRabbit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameRabbit.h; sourceTree = "<group>"; };
+		00B7247D243599580062C683 /* GameRabbit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameRabbit.m; sourceTree = "<group>"; };
+		00B7247F2435C21D0062C683 /* GameFishingHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameFishingHook.h; sourceTree = "<group>"; };
+		00B724802435C21D0062C683 /* GameFishingHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFishingHook.m; sourceTree = "<group>"; };
 		00C10DEC242E200D008C0F94 /* GameEntrance.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameEntrance.sks; sourceTree = "<group>"; };
 		00C10DF0242E2869008C0F94 /* GameEntrance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameEntrance.h; sourceTree = "<group>"; };
 		00C10DF1242E2869008C0F94 /* GameEntrance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameEntrance.m; sourceTree = "<group>"; };
@@ -186,6 +194,7 @@
 				000C999D24289AC600383265 /* fishing_grass3.png */,
 				000C999E24289AC600383265 /* fishing_grass2.png */,
 				000C999F24289AC600383265 /* fishing_grass6.png */,
+				00B7247A2435984E0062C683 /* fishing_rabbit_img.png */,
 				000C99A024289AC600383265 /* fishing_grass7.png */,
 				000C99A124289AC600383265 /* fishing_grass5.png */,
 				000C99A224289AC600383265 /* fishing_grass4.png */,
@@ -267,6 +276,8 @@
 				0071359124321D1B00B213E3 /* GameFishingIns.m */,
 				0071359324321D9F00B213E3 /* GameFishingModel.h */,
 				0071359424321D9F00B213E3 /* GameFishingModel.m */,
+				00B7247C243599580062C683 /* GameRabbit.h */,
+				00B7247D243599580062C683 /* GameRabbit.m */,
 				0084B4982424F160008B7B11 /* GameScene.h */,
 				0084B4992424F160008B7B11 /* GameScene.m */,
 				0084B4942424F160008B7B11 /* GameScene.sks */,
@@ -277,6 +288,8 @@
 				0084B4A72424F166008B7B11 /* main.m */,
 				0084B49E2424F160008B7B11 /* Main.storyboard */,
 				000C99CD24289BA300383265 /* rabbit */,
+				00B7247F2435C21D0062C683 /* GameFishingHook.h */,
+				00B724802435C21D0062C683 /* GameFishingHook.m */,
 			);
 			path = fishing;
 			sourceTree = "<group>";
@@ -447,6 +460,7 @@
 				0084B4A22424F166008B7B11 /* Assets.xcassets in Resources */,
 				000C99B324289AC600383265 /* fishing_clock.png in Resources */,
 				000C99D724289BA300383265 /* fishing_basket.png in Resources */,
+				00B7247B2435984E0062C683 /* fishing_rabbit_img.png in Resources */,
 				000C99B824289AC600383265 /* fishing_grass5.png in Resources */,
 				000C99C124289AC600383265 /* fishing_btn_start_up.png in Resources */,
 				000C99BF24289AC600383265 /* fishing_bg_score.png in Resources */,
@@ -502,8 +516,10 @@
 				001EE0DD242C8E3A00CF1B84 /* TimerManager.m in Sources */,
 				0071359224321D1B00B213E3 /* GameFishingIns.m in Sources */,
 				00C10DF2242E2869008C0F94 /* GameEntrance.m in Sources */,
+				00B724812435C21D0062C683 /* GameFishingHook.m in Sources */,
 				0084B49D2424F160008B7B11 /* GameViewController.m in Sources */,
 				0071358F2431A46C00B213E3 /* GSimpleButton.m in Sources */,
+				00B7247E243599580062C683 /* GameRabbit.m in Sources */,
 				0084B4A82424F166008B7B11 /* main.m in Sources */,
 				009E123E242B325F0013EEAB /* ScrollImage.m in Sources */,
 				00619C48243365A0001F5CF2 /* MathsUtils.m in Sources */,

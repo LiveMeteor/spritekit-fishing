@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 struct IWordData {
     NSString * imageUrl;
     NSString * audioUrl;
-    BOOL * trueOpt;
+    BOOL trueOpt;
 };
 
 /**

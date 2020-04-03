@@ -73,9 +73,8 @@ typedef enum: NSInteger {
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-//    for (UITouch *t in touches) {
-        NSLog(@"touch end");
-//    }
+    NSString *notifyName = _data.trueOpt ? @"bomb" : @"miss";
+    [[NSNotificationCenter defaultCenter] postNotificationName:notifyName object:@[self, [NSValue valueWithCGPoint:self.position]]];
 }
 
 - (void) setData:(struct IWordData)data {

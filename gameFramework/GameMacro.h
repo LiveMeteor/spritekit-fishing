@@ -24,6 +24,10 @@
 #define PI 3.1415927
 //MARK: 0-1之间的浮点随机数
 #define randomNum [MathsUtils randomNum]
+//MARK: 3位16进度数字颜色转 UIColor
+#define HexRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+//MARK: 4位16进度数字颜色转 UIColor
+#define HexRGBAlpha(rgbValue,a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:(a)]
 
 
 #endif /* GameMacro_h */
