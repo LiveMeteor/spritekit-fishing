@@ -315,10 +315,10 @@
 		009E123A242B32160013EEAB /* gameFramework */ = {
 			isa = PBXGroup;
 			children = (
+				009E123F242B7D220013EEAB /* GameMacro.h */,
+				009E123B242B32350013EEAB /* components */,
 				001EE0DA242C8DDE00CF1B84 /* managers */,
 				009E1240242B80A40013EEAB /* utils */,
-				009E123B242B32350013EEAB /* components */,
-				009E123F242B7D220013EEAB /* GameMacro.h */,
 			);
 			path = gameFramework;
 			sourceTree = "<group>";
@@ -326,10 +326,10 @@
 		009E123B242B32350013EEAB /* components */ = {
 			isa = PBXGroup;
 			children = (
-				009E123C242B325F0013EEAB /* ScrollImage.h */,
-				009E123D242B325F0013EEAB /* ScrollImage.m */,
 				0071358D2431A46C00B213E3 /* GSimpleButton.h */,
 				0071358E2431A46C00B213E3 /* GSimpleButton.m */,
+				009E123C242B325F0013EEAB /* ScrollImage.h */,
+				009E123D242B325F0013EEAB /* ScrollImage.m */,
 			);
 			path = components;
 			sourceTree = "<group>";

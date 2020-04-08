@@ -17,25 +17,15 @@
 
 - (void)didMoveToView:(SKView *)view {
     _btnStart = (GSimpleButton*)[self childNodeWithName:@"//btnStart"];
-//    _btnStart.onTouchHandler = @selector(onTouchStart);
+    [_btnStart setTouchEndCallback:@selector(onTouchStart) at:self];
     
-    __weak typeof(self)weakself = self;
-    _btnStart.onTouch = ^{
-        [weakself onTouchStart];
-    };
+//    __weak typeof(self)weakself = self;
+//    _btnStart.onTouch = ^{
+//        [weakself onTouchStart];
+//    };
 }
 
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-//    for (UITouch *touch in touches) {
-//        CGPoint pos = [touch locationInNode:self];
-//        SKNode * node = [self nodeAtPoint:pos];
-//        NSLog(@"%@", node.name);
-//    }
-//}
-
 - (void) onTouchStart {
-    NSLog(@"onTouchStart");
-    
     // Load the SKScene from 'GameScene.sks'
     GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
     // Set the scale mode to scale to fit the window

@@ -8,10 +8,6 @@
 
 #import "GSimpleButton.h"
 
-//typedef enum : NSUInteger {
-//
-//} UITouchType;
-
 @implementation GSimpleButton {
     IMP _impOnTouchHandler;
 }
@@ -29,11 +25,9 @@
     return self;
 }
 
-- (void) setOnTouchHandler:(SEL)onTouchHandler {
-    _onTouchHandler = onTouchHandler;
-    _impOnTouchHandler = [self methodForSelector:onTouchHandler];
+- (void)setTouchEndCallback:(SEL)func at:(id) funcSelf {
+    _impOnTouchHandler = [funcSelf methodForSelector:func];
 }
-
 
 - (void)touchAtPoint:(UITouch*)touch point:(CGPoint)pos {
     switch (touch.phase) {
@@ -50,6 +44,8 @@
         case UITouchPhaseCancelled:
             self.colorBlendFactor = 0;
             break;
+        default:
+            break;
     }
 }
 
@@ -58,31 +54,33 @@
         [self touchAtPoint:t point:[t locationInNode:self]];
     }
 }
+
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     for (UITouch *t in touches) {
         [self touchAtPoint:t point:[t locationInNode:self]];
     }
 }
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *t in touches) {
         [self touchAtPoint:t point:[t locationInNode:self]];
         if (_impOnTouchHandler) {
-            void(*cb)(void) = (void*)_impOnTouchHandler;
-            //NEEDFIX:
-            cb();
+            _impOnTouchHandler();
         }
         if (_onTouch) {
             _onTouch();
         }
     }
 }
+
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *t in touches) {
         [self touchAtPoint:t point:[t locationInNode:self]];
     }
 }
 
-
-
+- (void) dealloc {
+    _impOnTouchHandler = nil;
+}
 
 @end

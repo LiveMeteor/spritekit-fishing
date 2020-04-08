@@ -12,11 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GSimpleButton : SKSpriteNode
 
-@property (nonatomic, strong) void(^onTouch)(void);
+@property (nonatomic, copy) void(^onTouch)(void);
 
-@property (nonatomic, assign) SEL onTouchHandler;
++(instancetype) buttonWithImageNamed:(NSString *)name;
 
-+ (instancetype)buttonWithImageNamed:(NSString *)name;
+-(void) setTouchEndCallback:(SEL)func at:(id) funcSelf;
 
 @end
 
