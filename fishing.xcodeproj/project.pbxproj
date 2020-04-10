@@ -55,6 +55,7 @@
 		0084B4A82424F166008B7B11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0084B4A72424F166008B7B11 /* main.m */; };
 		0084B4B22424F166008B7B11 /* fishingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0084B4B12424F166008B7B11 /* fishingTests.m */; };
 		0084B4BD2424F166008B7B11 /* fishingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0084B4BC2424F166008B7B11 /* fishingUITests.m */; };
+		008DE288244077E500D944BB /* NetUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 008DE287244077E500D944BB /* NetUtils.m */; };
 		009E123E242B325F0013EEAB /* ScrollImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 009E123D242B325F0013EEAB /* ScrollImage.m */; };
 		009E1243242B80C10013EEAB /* DisplayUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 009E1242242B80C10013EEAB /* DisplayUtils.m */; };
 		00B7247B2435984E0062C683 /* fishing_rabbit_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 00B7247A2435984E0062C683 /* fishing_rabbit_img.png */; };
@@ -144,6 +145,8 @@
 		0084B4B82424F166008B7B11 /* fishingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fishingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0084B4BC2424F166008B7B11 /* fishingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fishingUITests.m; sourceTree = "<group>"; };
 		0084B4BE2424F166008B7B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		008DE286244077E500D944BB /* NetUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetUtils.h; sourceTree = "<group>"; };
+		008DE287244077E500D944BB /* NetUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetUtils.m; sourceTree = "<group>"; };
 		009E123C242B325F0013EEAB /* ScrollImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollImage.h; sourceTree = "<group>"; };
 		009E123D242B325F0013EEAB /* ScrollImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollImage.m; sourceTree = "<group>"; };
 		009E123F242B7D220013EEAB /* GameMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameMacro.h; sourceTree = "<group>"; };
@@ -341,6 +344,8 @@
 				009E1242242B80C10013EEAB /* DisplayUtils.m */,
 				00619C46243365A0001F5CF2 /* MathsUtils.h */,
 				00619C47243365A0001F5CF2 /* MathsUtils.m */,
+				008DE286244077E500D944BB /* NetUtils.h */,
+				008DE287244077E500D944BB /* NetUtils.m */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -524,6 +529,7 @@
 				009E123E242B325F0013EEAB /* ScrollImage.m in Sources */,
 				00619C48243365A0001F5CF2 /* MathsUtils.m in Sources */,
 				0071359524321D9F00B213E3 /* GameFishingModel.m in Sources */,
+				008DE288244077E500D944BB /* NetUtils.m in Sources */,
 				0084B4932424F160008B7B11 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
